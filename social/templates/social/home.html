@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h2>Create a new post</h2>
+    <form method="post" action="{% url 'post' %}">
+        {% csrf_token %}
+        <textarea name="text"></textarea>
+        <br>
+        <input type="submit" value="Post">
+    </form>
+    
+    <h1>Recent Posts</h1>
+    <ul>
+    {% for post in posts %}
+        <li>{{ post.created_at }} - <b>{{ post.user.username }}</b>: {{ post.text }}</li>
+    {% empty %}
+        <li>No posts yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

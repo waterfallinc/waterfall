@@ -14,5 +14,11 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['bio']
+        fields = ['avatar', 'bio', 'location']
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            try:
+                self.instance = self.instance.user.profile
+            except Profile.DoesNotExist:
+                self.instance = Profile(user=self.instance.user)
         # fields = ['image', 'bio']
